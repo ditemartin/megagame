@@ -1,4 +1,4 @@
-import openai, sqlite3, json, re
+import openai, json, re
 import streamlit as st
 import time
 import OPENAI_API_KEY from config
@@ -170,7 +170,7 @@ Attributes: \n\
 - {}\n".format(environment, warrior1, companion1, weapon1, trait11, trait12, trait13, trait14, trait15, warrior2, companion2, weapon2, trait21, trait22, trait23, trait24, trait25)
 
 
-openai.api_key = "sk-proj-S7mjPi79nwD1GF9QS8FHT3BlbkFJFqLEULdbzOSxe1rd30Co"
+openai.api_key = OPENAI_API_KEY
 
 #FIGHT!!!
 response = openai.chat.completions.create(
