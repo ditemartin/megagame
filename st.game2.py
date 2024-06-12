@@ -5,8 +5,6 @@ from config import OPENAI_API_KEY
 
 st.set_page_config(layout="wide")
 
-pip install SQLAlchemy==1.4.0
-
 st.write('OPENAI_API_KEY')
 
 conn = st.connection('pets_db', type='sql')
