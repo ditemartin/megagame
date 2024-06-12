@@ -1,7 +1,9 @@
 import openai, sqlite3, json, re
 import streamlit as st
 import time
+import OPENAI_API_KEY from config
 
+st.write('OPENAI_API_KEY')
 st.set_page_config(layout="wide")
 conn = sqlite3.connect('game.sqlite')
 cur = conn.cursor()
