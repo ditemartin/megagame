@@ -8,7 +8,7 @@ st.set_page_config(layout="wide")
 st.write('OPENAI_API_KEY')
 
 conn = st.connection('pets_db', type='sql')
-cur = conn.cursor()
+cur = conn.session()
 
 
 
