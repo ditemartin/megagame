@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 
 st.write('OPENAI_API_KEY')
 
-conn = st.connection('megagame_db', type='sql')
+conn = st.experimental_connection('pets_db', type='sql')
 cur = conn.session()
 
 
