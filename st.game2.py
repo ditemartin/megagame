@@ -3,8 +3,10 @@ import streamlit as st
 import time
 from config import OPENAI_API_KEY 
 
-st.write('OPENAI_API_KEY')
 st.set_page_config(layout="wide")
+
+st.write('OPENAI_API_KEY')
+
 conn = sqlite3.connect('game.sqlite')
 cur = conn.cursor()
 
