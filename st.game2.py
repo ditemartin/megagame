@@ -7,7 +7,7 @@ st.set_page_config(layout="wide")
 
 st.write('OPENAI_API_KEY')
 
-conn = sqlite3.connect('game.sqlite')
+conn = st.connection('pets_db', type='sql')
 cur = conn.cursor()
 
 
