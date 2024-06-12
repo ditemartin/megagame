@@ -1,5 +1,4 @@
 openai
-sqlite3
 json
 streamlit
 time
