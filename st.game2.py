@@ -51,8 +51,8 @@ if not weapon1 == "" and not weapon2 == "":
     time.sleep(3)
     #Set up database structure
     with conn.session as cur:
-        cur.execute('DROP TABLE IF EXISTS weapons')
-        cur.execute('DROP TABLE IF EXISTS companions')
+        cur.execute(text('DROP TABLE IF EXISTS weapons'))
+        cur.execute(text(DROP TABLE IF EXISTS companions))
         cur.execute('DROP TABLE IF EXISTS environments')
         cur.execute('DROP TABLE IF EXISTS traits')
         cur.execute('DROP TABLE IF EXISTS character')
