@@ -15,6 +15,7 @@ companion_coef = 1
 weapon_coef = 1
 weapon1 = ""
 weapon2 = ""
+environment = ""
 
 col4, col1, col3, col2, col5 = st.columns([3,10,2,10,3])
 col1.header('Player one')
@@ -139,8 +140,8 @@ if not weapon1 == "" and not weapon2 == "":
         cur.execute('SELECT name FROM environments ORDER BY random()')
         environment = cur.fetchone()[0]
         print(environment)
-        environments = ("high school cafeteria", "volcano", "colloseum", "war torn leningrad", "abandoned church", "chocolate factory", "tropical island", "pirate ship", "space station", "fairytale meadow", "castle")
-        environment = random.choice(environments)
+        #environments = ("high school cafeteria", "volcano", "colloseum", "war torn leningrad", "abandoned church", "chocolate factory", "tropical island", "pirate ship", "space station", "fairytale meadow", "castle")
+        #environment = random.choice(environments)
     
     status = 'Prepare for battle!'
     st.subheader(status + '  \n  \n')
