@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 
 st.write(st.secrets['auth_token'])
 
-conn = st.experimental_connection('pets_db', type='sql')
+conn = st.connection('pets_db', type='sql')
 cur = conn.session()
 
 
