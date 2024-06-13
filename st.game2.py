@@ -7,8 +7,6 @@ import sqlalchemy
 
 st.set_page_config(layout="wide")
 
-st.write(st.secrets['auth_token'])
-
 conn = st.experimental_connection('pets_db', type='sql')
 
 companion_coef = 1
@@ -175,7 +173,7 @@ if not weapon1 == "" and not weapon2 == "":
     - {}\n".format(environment, warrior1, companion1, weapon1, trait11, trait12, trait13, trait14, trait15, warrior2, companion2, weapon2, trait21, trait22, trait23, trait24, trait25)
     
     
-    openai.api_key = OPENAI_API_KEY
+    openai.api_key = st.secrets['auth_token']
     
     #FIGHT!!!
     response = openai.chat.completions.create(
