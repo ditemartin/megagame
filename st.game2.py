@@ -3,6 +3,7 @@ import streamlit as st
 import time
 from config import OPENAI_API_KEY 
 import sqlalchemy
+import random
 
 
 st.set_page_config(layout="wide")
