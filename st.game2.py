@@ -1,7 +1,6 @@
 import openai, json, re
 import streamlit as st
 import time
-from config import OPENAI_API_KEY 
 import sqlalchemy
 #import random
 
