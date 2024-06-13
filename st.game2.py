@@ -145,55 +145,55 @@ if not weapon1 == "" and not weapon2 == "":
     
     status = 'Prepare for battle!'
     st.subheader(status + '  \n  \n')
-
-
-_ = """
-"""
-
-
-#Set up prompt
-prompt = "The battle will take place in the environment of: {}\n\
-\n\
-First character's name: {}\n\
-Pet companion: {}\n\
-Weapon: {}\n\
-Attributes: \n\
-- {}\n\
-- {}\n\
-- {}\n\
-- {}\n\
-- {}\n\
-\n\
-Second character's name: {}\n\
-Pet companion: {}\n\
-Weapon: {}\n\
-Attributes: \n\
-- {}\n\
-- {}\n\
-- {}\n\
-- {}\n\
-- {}\n".format(environment, warrior1, companion1, weapon1, trait11, trait12, trait13, trait14, trait15, warrior2, companion2, weapon2, trait21, trait22, trait23, trait24, trait25)
-
-
-openai.api_key = OPENAI_API_KEY
-
-#FIGHT!!!
-response = openai.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", 
-         "content": "You are a successful fiction novel writer. I will give you information on two characters. Your task is to describe an epic battle between the two characters. \
-            Be playful and funny, the fight should by dynamic with possible twists. One of the characters must win the battle in the end, but the choice should be random. \
-            Each character has a weapon and pet companion that should play a role in the battle. Also, each character has a set of five attributes, \
-            Use 2 or 3 of the attributes provided in the prompt for each of the characters, but do not repeat them word for word. The output will be three paragraphs long with a maximum of 200 words.",
-         },
-        {"role": "user", 
-         "content": "{}".format(prompt),
-         }
-        ],
-    frequency_penalty=1,
-    max_tokens=1000,
-    temperature = 1)
-
-battle = response.choices[0].message.content
-st.write("\n\n\n\n", battle)
+    
+    
+    _ = """
+    """
+    
+    
+    #Set up prompt
+    prompt = "The battle will take place in the environment of: {}\n\
+    \n\
+    First character's name: {}\n\
+    Pet companion: {}\n\
+    Weapon: {}\n\
+    Attributes: \n\
+    - {}\n\
+    - {}\n\
+    - {}\n\
+    - {}\n\
+    - {}\n\
+    \n\
+    Second character's name: {}\n\
+    Pet companion: {}\n\
+    Weapon: {}\n\
+    Attributes: \n\
+    - {}\n\
+    - {}\n\
+    - {}\n\
+    - {}\n\
+    - {}\n".format(environment, warrior1, companion1, weapon1, trait11, trait12, trait13, trait14, trait15, warrior2, companion2, weapon2, trait21, trait22, trait23, trait24, trait25)
+    
+    
+    openai.api_key = OPENAI_API_KEY
+    
+    #FIGHT!!!
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", 
+             "content": "You are a successful fiction novel writer. I will give you information on two characters. Your task is to describe an epic battle between the two characters. \
+                Be playful and funny, the fight should by dynamic with possible twists. One of the characters must win the battle in the end, but the choice should be random. \
+                Each character has a weapon and pet companion that should play a role in the battle. Also, each character has a set of five attributes, \
+                Use 2 or 3 of the attributes provided in the prompt for each of the characters, but do not repeat them word for word. The output will be three paragraphs long with a maximum of 200 words.",
+             },
+            {"role": "user", 
+             "content": "{}".format(prompt),
+             }
+            ],
+        frequency_penalty=1,
+        max_tokens=1000,
+        temperature = 1)
+    
+    battle = response.choices[0].message.content
+    st.write("\n\n\n\n", battle)
