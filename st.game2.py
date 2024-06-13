@@ -51,12 +51,6 @@ if not weapon1 == "" and not weapon2 == "":
     time.sleep(3)
     #Set up database structure
     with conn.session as cur:
-        cur.execute(text('DROP TABLE IF EXISTS weapons'))
-        cur.execute(text('DROP TABLE IF EXISTS companions'))
-        cur.execute(text('DROP TABLE IF EXISTS environments'))
-        cur.execute(text('DROP TABLE IF EXISTS traits'))
-        cur.execute(text('DROP TABLE IF EXISTS character'))
-        cur.execute(text('DROP TABLE IF EXISTS warriors'))
     
         cur.execute(text('CREATE TABLE IF NOT EXISTS weapons (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)'))
         cur.execute(text('CREATE TABLE IF NOT EXISTS companions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)'))
