@@ -12,8 +12,6 @@ st.write(st.secrets['auth_token'])
 conn = st.experimental_connection('pets_db', type='sql')
 cur = conn.session()
 
-
-
 companion_coef = 1
 weapon_coef = 1
 weapon1 = ""
@@ -54,93 +52,94 @@ if not weapon1 == "" and not weapon2 == "":
     st.write(status)
     time.sleep(3)
     #Set up database structure
-    cur.execute('DROP TABLE IF EXISTS weapons')
-    cur.execute('DROP TABLE IF EXISTS companions')
-    cur.execute('DROP TABLE IF EXISTS environments')
-    cur.execute('DROP TABLE IF EXISTS traits')
-    cur.execute('DROP TABLE IF EXISTS character')
-    cur.execute('DROP TABLE IF EXISTS warriors')
-
-    cur.execute('CREATE TABLE IF NOT EXISTS weapons (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)')
-    cur.execute('CREATE TABLE IF NOT EXISTS companions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)')
-    cur.execute('CREATE TABLE IF NOT EXISTS environments (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE)')
-    cur.execute('CREATE TABLE IF NOT EXISTS traits (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE)')
-    cur.execute('CREATE TABLE IF NOT EXISTS character (trait_id INTEGER NOT NULL, warrior_id INTEGER NOT NULL, PRIMARY KEY (trait_id, warrior_id))')
-    cur.execute('CREATE TABLE IF NOT EXISTS warriors (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL, weapon_id INTEGER NOT NULL, companion_id INTEGER NOT NULL)')
-
-    cur.execute('INSERT OR IGNORE INTO environments (name) VALUES ("high school cafeteria"), \
-                ("volcano"), ("colloseum"), ("war torn leningrad"), ("abandoned church"), ("chocolate factory"), \
-                ("tropical island"), ("pirate ship"), ("space station"), ("fairytale meadow"), ("castle");')
+    with conn.session as cur:
+        cur.execute('DROP TABLE IF EXISTS weapons')
+        cur.execute('DROP TABLE IF EXISTS companions')
+        cur.execute('DROP TABLE IF EXISTS environments')
+        cur.execute('DROP TABLE IF EXISTS traits')
+        cur.execute('DROP TABLE IF EXISTS character')
+        cur.execute('DROP TABLE IF EXISTS warriors')
     
-    status = 'Inputs ready ...'
-    st.write(status)
+        cur.execute('CREATE TABLE IF NOT EXISTS weapons (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)')
+        cur.execute('CREATE TABLE IF NOT EXISTS companions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE, coef FLOAT NOT NULL)')
+        cur.execute('CREATE TABLE IF NOT EXISTS environments (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE)')
+        cur.execute('CREATE TABLE IF NOT EXISTS traits (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL UNIQUE)')
+        cur.execute('CREATE TABLE IF NOT EXISTS character (trait_id INTEGER NOT NULL, warrior_id INTEGER NOT NULL, PRIMARY KEY (trait_id, warrior_id))')
+        cur.execute('CREATE TABLE IF NOT EXISTS warriors (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TINYTEXT NOT NULL, weapon_id INTEGER NOT NULL, companion_id INTEGER NOT NULL)')
     
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait11,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait11,))
-    trait11_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait21,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait21,))
-    trait21_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait12,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait12,))
-    trait12_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait22,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait22,))
-    trait22_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait13,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait13,))
-    trait13_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait23,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait23,))
-    trait23_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait14,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait14,))
-    trait14_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait24,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait24,))
-    trait24_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait15,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait15,))
-    trait15_id = cur.fetchone()[0]
-    cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait25,))
-    cur.execute('SELECT id FROM traits WHERE name = (?)', (trait25,))
-    trait25_id = cur.fetchone()[0]
-
-    cur.execute('INSERT OR IGNORE INTO companions (name, coef) VALUES (?,?)', (companion1,companion_coef))
-    cur.execute('INSERT OR IGNORE INTO companions (name, coef) VALUES (?,?)', (companion2,companion_coef))
-    cur.execute('INSERT OR IGNORE INTO weapons (name, coef) VALUES (?,?)', (weapon1, weapon_coef))
-    cur.execute('INSERT OR IGNORE INTO weapons (name, coef) VALUES (?,?)', (weapon2, weapon_coef))
-    cur.execute('SELECT id FROM weapons WHERE name = (?)', (weapon1,))
-    weapon1_id = cur.fetchone()[0]
-    cur.execute('SELECT id FROM weapons WHERE name = (?)', (weapon2,))
-    weapon2_id = cur.fetchone()[0]
-    cur.execute('SELECT id FROM companions WHERE name = (?)', (companion1,))
-    companion1_id = cur.fetchone()[0]
-    cur.execute('SELECT id FROM companions WHERE name = (?)', (companion2,))
-    companion2_id = cur.fetchone()[0]
-
-    cur.execute('INSERT OR IGNORE INTO warriors (name, weapon_id, companion_id) VALUES (?,?,?)', (warrior1, weapon1_id, companion1_id))
-    cur.execute('INSERT OR IGNORE INTO warriors (name, weapon_id, companion_id) VALUES (?,?,?)', (warrior2, weapon2_id, companion2_id))
-    cur.execute('SELECT id FROM warriors WHERE name = ?', (warrior1,))
-    warrior1_id = cur.fetchone()[0]
-    cur.execute('SELECT id FROM warriors WHERE name = ?', (warrior2,))
-    warrior2_id = cur.fetchone()[0]
-
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait11_id, warrior1_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait12_id, warrior1_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait13_id, warrior1_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait14_id, warrior1_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait15_id, warrior1_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait21_id, warrior2_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait22_id, warrior2_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait23_id, warrior2_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait24_id, warrior2_id))
-    cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait25_id, warrior2_id))
-    conn.commit()
+        cur.execute('INSERT OR IGNORE INTO environments (name) VALUES ("high school cafeteria"), \
+                    ("volcano"), ("colloseum"), ("war torn leningrad"), ("abandoned church"), ("chocolate factory"), \
+                    ("tropical island"), ("pirate ship"), ("space station"), ("fairytale meadow"), ("castle");')
+        
+        status = 'Inputs ready ...'
+        st.write(status)
+        
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait11,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait11,))
+        trait11_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait21,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait21,))
+        trait21_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait12,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait12,))
+        trait12_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait22,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait22,))
+        trait22_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait13,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait13,))
+        trait13_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait23,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait23,))
+        trait23_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait14,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait14,))
+        trait14_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait24,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait24,))
+        trait24_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait15,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait15,))
+        trait15_id = cur.fetchone()[0]
+        cur.execute('INSERT OR IGNORE INTO traits (name) VALUES (?)', (trait25,))
+        cur.execute('SELECT id FROM traits WHERE name = (?)', (trait25,))
+        trait25_id = cur.fetchone()[0]
     
-    cur.execute('SELECT name FROM environments ORDER BY random()')
-    environment = cur.fetchone()[0]
-    print(environment)
+        cur.execute('INSERT OR IGNORE INTO companions (name, coef) VALUES (?,?)', (companion1,companion_coef))
+        cur.execute('INSERT OR IGNORE INTO companions (name, coef) VALUES (?,?)', (companion2,companion_coef))
+        cur.execute('INSERT OR IGNORE INTO weapons (name, coef) VALUES (?,?)', (weapon1, weapon_coef))
+        cur.execute('INSERT OR IGNORE INTO weapons (name, coef) VALUES (?,?)', (weapon2, weapon_coef))
+        cur.execute('SELECT id FROM weapons WHERE name = (?)', (weapon1,))
+        weapon1_id = cur.fetchone()[0]
+        cur.execute('SELECT id FROM weapons WHERE name = (?)', (weapon2,))
+        weapon2_id = cur.fetchone()[0]
+        cur.execute('SELECT id FROM companions WHERE name = (?)', (companion1,))
+        companion1_id = cur.fetchone()[0]
+        cur.execute('SELECT id FROM companions WHERE name = (?)', (companion2,))
+        companion2_id = cur.fetchone()[0]
+    
+        cur.execute('INSERT OR IGNORE INTO warriors (name, weapon_id, companion_id) VALUES (?,?,?)', (warrior1, weapon1_id, companion1_id))
+        cur.execute('INSERT OR IGNORE INTO warriors (name, weapon_id, companion_id) VALUES (?,?,?)', (warrior2, weapon2_id, companion2_id))
+        cur.execute('SELECT id FROM warriors WHERE name = ?', (warrior1,))
+        warrior1_id = cur.fetchone()[0]
+        cur.execute('SELECT id FROM warriors WHERE name = ?', (warrior2,))
+        warrior2_id = cur.fetchone()[0]
+    
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait11_id, warrior1_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait12_id, warrior1_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait13_id, warrior1_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait14_id, warrior1_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait15_id, warrior1_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait21_id, warrior2_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait22_id, warrior2_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait23_id, warrior2_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait24_id, warrior2_id))
+        cur.execute('INSERT OR IGNORE INTO character (trait_id, warrior_id) VALUES (?,?)', (trait25_id, warrior2_id))
+        conn.commit()
+        
+        cur.execute('SELECT name FROM environments ORDER BY random()')
+        environment = cur.fetchone()[0]
+        print(environment)
     
     status = 'Prepare for battle!'
     st.subheader(status + '  \n  \n')
