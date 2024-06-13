@@ -10,7 +10,6 @@ st.set_page_config(layout="wide")
 st.write(st.secrets['auth_token'])
 
 conn = st.experimental_connection('pets_db', type='sql')
-cur = conn.session()
 
 companion_coef = 1
 weapon_coef = 1
