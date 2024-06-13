@@ -3,7 +3,7 @@ import streamlit as st
 import time
 from config import OPENAI_API_KEY 
 import sqlalchemy
-import random
+#import random
 
 
 st.set_page_config(layout="wide")
@@ -51,7 +51,8 @@ if not weapon1 == "" and not weapon2 == "":
     st.write(status)
     time.sleep(3)
     environments = ("high school cafeteria", "volcano", "colloseum", "war torn leningrad", "abandoned church", "chocolate factory", "tropical island", "pirate ship", "space station", "fairytale meadow", "castle")
-    environment = random.choice(environments)
+    #environment = random.choice(environments)
+    environment = "island"
     
     status = 'Prepare for battle!'
     st.subheader(status + '  \n  \n')
