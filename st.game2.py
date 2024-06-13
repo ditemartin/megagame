@@ -7,7 +7,7 @@ import sqlalchemy
 
 st.set_page_config(layout="wide")
 
-conn = st.experimental_connection('pets_db', type='sql')
+conn = st.connection('pets_db', type='sql')
 
 companion_coef = 1
 weapon_coef = 1
@@ -18,10 +18,10 @@ environment = ""
 col4, col1, col3, col2, col5 = st.columns([3,10,2,10,3])
 col1.header('Player one')
 warrior1 = col1.text_input('What is your name?', key = 'warrior1')
-col1.write("", key = 'spacerr')
+col1.write("  ")
 col2.header('Player two')
 warrior2 = col2.text_input('What is your name?', key = 'warrior2')
-col2.write("", key = 'spacer')
+col2.write("")
 
 if not warrior1 == "" and not warrior2 == "":
     col1.subheader(warrior2.upper() + ' how would you describe ' + warrior1.upper() + '? Write one thing about each their: ')
